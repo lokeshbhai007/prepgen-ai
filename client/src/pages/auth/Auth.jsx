@@ -2,8 +2,35 @@ import React from "react";
 import { motion } from "motion/react";
 import { FcGoogle } from "react-icons/fc";
 import Feature from "../../components/Features";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../../../utils/firebase";
+import axios from "axios"
+import { serverURL } from "../../App";
 
 function Auth() {
+
+
+  const handleGoogleAuth = async () => {
+    try {
+      
+      const response = await signInWithPopup(auth, provider)
+      const User = response.user
+      const name = User.displayName
+      const email = User.email
+
+      const result = await axios.post(serverURL + "/api/auth/google" , {name, email}, {
+        withCredentials : true 
+      } )
+
+      console.log(result.data);
+
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
   return (
     <div className="min-h-screen overflow-hidden bg-white text-black px-8 ">
       <motion.header
@@ -58,7 +85,9 @@ function Auth() {
               border border-white/10
               text-white font-semibold text-lg
               shadow-[0_25px_60px_rgba(0,0,0,0.7)]"
+              onClick={handleGoogleAuth}
           >
+            
             <FcGoogle size={22} />
             Continue with Google
           </motion.button>
