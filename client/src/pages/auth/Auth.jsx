@@ -6,9 +6,15 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../../utils/firebase";
 import axios from "axios"
 import { serverURL } from "../../App";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setUserData } from "../../redux/userSlice";
+
 
 function Auth() {
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleGoogleAuth = async () => {
     try {
@@ -22,7 +28,9 @@ function Auth() {
         withCredentials : true 
       } )
 
-      console.log(result.data);
+      // for auto navigating after the login
+      dispatch(setUserData(result.data));
+      navigate("/", { replace: true });
 
       
     } catch (error) {

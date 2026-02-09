@@ -8,6 +8,7 @@ export const getCurrUser = async (dispatch) =>{
 
         const result = await axios.get(serverURL + "/api/user/currentuser" , 
             {withCredentials : true })
+        
 
         dispatch(setUserData(result.data))
         
