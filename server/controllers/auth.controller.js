@@ -8,7 +8,7 @@ export const googleAuth = async (req, res) => {
     if (!email) {
       return res.status(400).json({
         success: false,
-        message: "Email is required"
+        message: "Email is required",
       });
     }
 
@@ -18,47 +18,51 @@ export const googleAuth = async (req, res) => {
       user = await UserModel.create({ name, email });
     }
 
-    let token = getToken(user._id)
+    const token = getToken(user._id);
 
-    res.cookie("token" , token, {
-        httpOnly : true,
-        secure : false,
-        samesite : "strict",
-        maxAge : 7 * 24 * 60 * 60 * 1000
-    })
+    console.log("TOKEN:", token);
+    console.log("TYPE:", typeof token);
+
+    // 🔥 CORRECT COOKIE CONFIG
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // true only in production
+      sameSite: "lax", // IMPORTANT
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     return res.status(200).json({
-        message : "Sign in successfully",
-        success : true,
-        user : user
-    })
-
+      success: true,
+      message: "Sign in successfully",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
   } catch (error) {
-
     return res.status(500).json({
-        message : "Internal server error",
-        success : false,
-    })
-    
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
-
 export const logOut = async (req, res) => {
+  try {
+    res.clearCookie("token", {
+      sameSite: "lax",
+      secure: false,
+    });
 
-    try {
-
-        await res.clearCookie("token")
-        return res.status(200).json({
-            message : "Log out successfully",
-            success : true,
-        })
-        
-    } catch (error) {
-        return res.status(500).json({
-            message : "Internal server error",
-            success : false,
-        })
-    }
-
-}
+    return res.status(200).json({
+      success: true,
+      message: "Log out successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
