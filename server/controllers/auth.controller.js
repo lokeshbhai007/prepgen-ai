@@ -59,6 +59,7 @@ export const logOut = async (req, res) => {
       success: true,
       message: "Log out successfully",
     });
+    
   } catch (error) {
     return res.status(500).json({
       success: false,

@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import img from "../../assets/img1.png"
 import Features from "../../components/Features";
+import Footer from "../../components/Footer";
 
 
 
@@ -103,7 +104,7 @@ function Home() {
         <Features icon="⬇️" title="PDF Download" des="Download clean, printable PDFs instantly." />
 
       </section>
-      {/* <Footer/> */}
+      <Footer/>
     </div>
   );
 }
