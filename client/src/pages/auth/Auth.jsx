@@ -30,7 +30,6 @@ function Auth() {
 
       // for auto navigating after the login
       dispatch(setUserData(result.data));
-      navigate("/", { replace: true });
 
       
     } catch (error) {
