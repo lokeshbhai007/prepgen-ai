@@ -67,7 +67,7 @@ function Home() {
                           bg-gradient-to-br from-black/90 via-black/80 to-black/90
                           border border-white/10
                           text-white font-semibold text-lg
-                          shadow-[0_25px_60px_rgba(0,0,0,0.7)]"
+                          shadow-[0_25px_60px_rgba(0,0,0,0.7)] cursor-pointer"
           >
             Get Started
           </motion.button>
@@ -97,7 +97,7 @@ function Home() {
       </section>
 
       {/* bottom */}
-      <section className='max-w-7xl mx-auto px-8 py-32 grid grid-cols-1 md:grid-cols-4 gap-12'>
+      <section className='max-w-7xl mx-auto px-8 py-32 grid grid-cols-1 md:grid-cols-4 gap-12 cursor-pointer'>
         <Features icon="📘" title="Exam Notes" des="High-yield exam-oriented notes with revision points."/>
         <Features icon="📂" title="Project Notes" des="Well-structured content for assignments and projects." />
         <Features icon="📊" title="Diagrams" des="Auto-generated visual diagrams for clarity." />

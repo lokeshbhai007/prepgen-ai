@@ -10,11 +10,6 @@ const userSlice = createSlice({
         setUserData:(state,action)=>{
             state.userData = action.payload
 
-        },
-        updateCredits:(state,action)=>{
-            if(state.userData){
-                state.userData.credits = action.payload
-            }
         }
     }
 })

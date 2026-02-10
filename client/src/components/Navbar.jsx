@@ -99,7 +99,7 @@ function Navbar() {
                 <p className="text-sm text-gray-300 mb-4">
                   Use credits to generate AI notes, diagrams & PDFs.
                 </p>
-                <button
+                <button onClick={()=> navigate("/pricing")}
                   className=" w-full py-2 rounded-lg
                       bg-gradient-to-br from-white to-gray-200
                       text-black font-semibold
