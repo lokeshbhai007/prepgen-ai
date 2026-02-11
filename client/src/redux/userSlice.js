@@ -10,8 +10,15 @@ const userSlice = createSlice({
         setUserData:(state,action)=>{
             state.userData = action.payload
 
+        },
+        updateCredits : (state, actions) => {
+            if(state.userData){
+                state.userData.credits = actions.payload
+            }
         }
-    }
+    },
+
+
 })
 
 export const {setUserData , updateCredits} = userSlice.actions

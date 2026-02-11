@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { useDispatch } from "react-redux";
 import { generateNodes } from "../services/api.js";
+import { updateCredits } from "../redux/userSlice.js";
 
 function TopicForm({ setResult, setLoading, loading, setError }) {
   const [topic, setTopic] = useState("");
@@ -36,11 +37,55 @@ function TopicForm({ setResult, setLoading, loading, setError }) {
 
       setResult(result.data);
       setLoading(false);
+
+      setClassLevel("")
+      setTopic("")
+      setExamType("")
+      setRevisionMode(false)
+      setIncludeChart(false)
+      setIncludeDiagram(false)
+
+      if(typeof result.creditsLeft == "number"){
+        dispatch(updateCredits(result.creditsLeft))
+      }
+
+
     } catch (error) {
       setError("Failed to fetched the note");
       setLoading(false);
     }
   };
+
+  useEffect(() =>{
+
+    if(!loading){
+      setProgress(0)
+      setProgressText("")
+      return
+    }
+
+    let value = 0 //initial
+    const interval = setInterval(() => {
+      value += Math.random() * 8;
+
+      if (value >= 95) {
+        value = 95;
+        setProgressText("Almost done…");
+        clearInterval(interval);
+      } else if (value > 70) {
+        setProgressText("Finalizing notes…");
+      } else if (value > 40) {
+        setProgressText("Processing content…");
+      } else {
+        setProgressText("Generating notes…");
+      }
+
+      setProgress(Math.floor(value));
+    }, 700)
+
+    return () => clearInterval(interval)
+
+  }, [loading]) 
 
   return (
     <motion.div
@@ -64,7 +109,7 @@ function TopicForm({ setResult, setLoading, loading, setError }) {
         border border-white/20
         placeholder-gray-400
         text-white
-        focus:outline-none focus:ring-2 focus:ring-white/30"
+        focus:outline-none focus:ring-2 focus:ring-white/30" required
         placeholder="Enter topic (e.g. Web Development)"
         onChange={(e) => setTopic(e.target.value)}
         value={topic}
