@@ -81,6 +81,39 @@ function Notes() {
         <TopicForm loading={loading} setResult={setResult} setLoading={setLoading} setError={setError}/>
       </motion.div>
 
+      {loading && (
+          <motion.div
+            animate={{ opacity: [0.4, 1, 0.4] }}
+            transition={{ repeat: Infinity, duration: 1.2 }}
+            className="text-center text-black font-medium mb-6"
+          >
+            Generating exam-focused notes…
+          </motion.div>
+        )}
+
+        {error && (
+          <div className="mb-6 text-center text-red-600 font-medium">
+            {error}
+          </div>
+        )}
+
+    {!result && <motion.div whileHover={{ scale: 1.02 }}
+            className="
+              h-64
+              rounded-2xl
+              flex flex-col items-center justify-center
+              bg-white/60 backdrop-blur-lg
+              border border-dashed border-gray-300
+              text-gray-500
+              shadow-inner
+            ">
+               <span className="text-4xl mb-3">📘</span>
+            <p className="text-sm">
+              Generated notes will appear here
+            </p>
+
+     </motion.div>}
+
     </div>
   );
 }

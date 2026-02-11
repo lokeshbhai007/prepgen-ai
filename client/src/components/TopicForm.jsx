@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { useDispatch } from "react-redux";
-
+import { generateNodes } from "../services/api.js";
 
 function TopicForm({ setResult, setLoading, loading, setError }) {
   const [topic, setTopic] = useState("");
@@ -14,7 +14,33 @@ function TopicForm({ setResult, setLoading, loading, setError }) {
   const [progressText, setProgressText] = useState("");
   const dispatch = useDispatch();
 
+  const handleSubmit = async () => {
+    if (!topic.trim()) {
+      setError("Please Enter the topic name");
+      return;
+    }
 
+    setError("");
+    setLoading(true);
+    setResult(null);
+
+    try {
+      const result = await generateNodes({
+        topic,
+        classLevel,
+        examType,
+        revisionMode,
+        includeDiagram,
+        includeChart,
+      });
+
+      setResult(result.data);
+      setLoading(false);
+    } catch (error) {
+      setError("Failed to fetched the note");
+      setLoading(false);
+    }
+  };
 
   return (
     <motion.div
@@ -87,7 +113,7 @@ function TopicForm({ setResult, setLoading, loading, setError }) {
       </div>
 
       <motion.button
-        // onClick={handleSubmit}
+        onClick={handleSubmit}
         whileHover={!loading ? { scale: 1.02 } : {}}
         whileTap={!loading ? { scale: 0.95 } : {}}
         disabled={loading}
@@ -132,7 +158,7 @@ function TopicForm({ setResult, setLoading, loading, setError }) {
     </motion.div>
   );
 }
-
+     
 function Toggle({ label, checked, onChange }) {
   return (
     <div

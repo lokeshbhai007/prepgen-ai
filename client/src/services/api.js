@@ -20,3 +20,25 @@ export const getCurrUser = async (dispatch) =>{
         
     }
 }
+
+
+export const generateNodes = async (payload) => {
+    try {
+
+        console.log("request come");
+        
+
+        const result = await axios.post(serverURL + "/api/notes/generate-notes", payload , {withCredentials: true})
+        console.log(result);
+
+        console.log("request gone");
+        
+        return result.data
+
+
+    } catch (error) {
+
+        console.log(error.message);
+        
+    }
+} 
