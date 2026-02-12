@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { useDispatch } from "react-redux";
 import { generateNodes } from "../services/api.js";
 import { updateCredits } from "../redux/userSlice.js";
+import { Toggle } from "./Toggle.jsx";
 
 function TopicForm({ setResult, setLoading, loading, setError }) {
   const [topic, setTopic] = useState("");
@@ -140,21 +141,25 @@ function TopicForm({ setResult, setLoading, loading, setError }) {
       />
 
       <div className="flex flex-col md:flex-row gap-6">
+        
         <Toggle
           label="Exam Revision Mode"
           checked={revisionMode}
           onChange={() => setRevisionMode(!revisionMode)}
         />
+
         <Toggle
           label="Include Diagram"
           checked={includeDiagram}
           onChange={() => setIncludeDiagram(!includeDiagram)}
         />
+
         <Toggle
           label="Include Charts"
           checked={includeChart}
           onChange={() => setIncludeChart(!includeChart)}
         />
+
       </div>
 
       <motion.button
@@ -204,45 +209,6 @@ function TopicForm({ setResult, setLoading, loading, setError }) {
   );
 }
      
-function Toggle({ label, checked, onChange }) {
-  return (
-    <div
-      className="flex items-center gap-4 cursor-pointer select-none"
-      onClick={onChange}
-    >
-      <motion.div
-        animate={{
-          backgroundColor: checked
-            ? "rgba(34,197,94,0.35)" // green when ON
-            : "rgba(255,255,255,0.15)", // gray when OFF
-        }}
-        transition={{ duration: 0.25 }}
-        className="relative w-12 h-6 rounded-full
-          border border-white/20
-          backdrop-blur-lg"
-      >
-        <motion.div
-          layout
-          transition={{ type: "spring", stiffness: 500, damping: 30 }}
-          className=" absolute top-0.5
-            h-5 w-5 rounded-full
-            bg-white
-            shadow-[0_5px_15px_rgba(0,0,0,0.5)]"
-          style={{
-            left: checked ? "1.6rem" : "0.25rem",
-          }}
-        ></motion.div>
-      </motion.div>
 
-      <span
-        className={`text-sm transition-colors ${
-          checked ? "text-green-300" : "text-gray-300"
-        }`}
-      >
-        {label}
-      </span>
-    </div>
-  );
-}
 
 export default TopicForm;

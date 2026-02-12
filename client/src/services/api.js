@@ -29,7 +29,6 @@ export const generateNodes = async (payload) => {
         
 
         const result = await axios.post(serverURL + "/api/notes/generate-notes", payload , {withCredentials: true})
-        console.log(result);
 
         console.log("request gone");
         
