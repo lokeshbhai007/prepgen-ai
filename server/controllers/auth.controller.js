@@ -20,9 +20,6 @@ export const googleAuth = async (req, res) => {
 
     const token = getToken(user._id);
 
-    console.log("TOKEN:", token);
-    console.log("TYPE:", typeof token);
-
     // 🔥 CORRECT COOKIE CONFIG
     res.cookie("token", token, {
       httpOnly: true,
@@ -40,6 +37,7 @@ export const googleAuth = async (req, res) => {
         email: user.email,
       },
     });
+
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -47,6 +45,8 @@ export const googleAuth = async (req, res) => {
     });
   }
 };
+
+
 
 export const logOut = async (req, res) => {
   try {

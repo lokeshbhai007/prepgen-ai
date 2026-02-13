@@ -7,6 +7,8 @@ import { connectDB } from "./utils/db.utils.js"
 import authRouter from "./routes/auth.route.js"
 import userRouter from "./routes/user.route.js"
 import generateRouter from "./routes/generate.route.js"
+import pdfRouter from "./routes/pdfDownload.route.js"
+import historyRoute from "./routes/history.route.js"
 
 dotenv.config()
 
@@ -28,6 +30,9 @@ app.use(cookieParser())
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
 app.use("/api/notes", generateRouter)
+app.use("/api/pdf", pdfRouter)
+app.use("/api/history", historyRoute)
+
 
 
 
