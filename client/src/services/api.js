@@ -64,3 +64,38 @@ export const downloadPdf = async (result) => {
     }
 
 }
+
+
+
+/**
+ * Fetches paginated history notes
+ * @param {number} page - Page number (1, 2, 3...)
+ * @param {number} limit - Items per page (default: 10)
+ * @returns {Promise} - Returns history data with pagination info
+ */
+export const historyNotesData = async (page = 1, limit = 10) => {
+    try {
+        // Build URL with query parameters
+        // Example: http://localhost:5000/api/history/notes-history?page=2&limit=10
+        const response = await axios.get(
+            `${serverURL}/api/history/notes-history?page=${page}&limit=${limit}`, 
+            { withCredentials: true }
+        )
+
+        console.log("Fetched:", response.data.historyData.length, "notes for page", page)
+
+        // Return structured data
+        return {
+            historyData: response.data.historyData,     // Array of notes
+            total: response.data.total,                 // Total count
+            totalPages: response.data.totalPages,       // Total pages
+            currentPage: response.data.currentPage,     // Current page
+            hasNextPage: response.data.hasNextPage,     // Can go next?
+            hasPrevPage: response.data.hasPrevPage      // Can go back?
+        }
+        
+    } catch (error) {
+        console.error("API Error:", error)
+        throw new Error("History could not be fetched")
+    }
+}
