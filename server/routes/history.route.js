@@ -4,6 +4,6 @@ import { historyOFNotes } from "../controllers/history.controller.js"
 
 const historyRoute = express.Router()
 
-historyRoute.post("/notes-history", isAuth, historyOFNotes)
+historyRoute.get("/notes-history", isAuth, historyOFNotes)
 
 export default historyRoute

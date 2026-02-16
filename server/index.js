@@ -9,11 +9,20 @@ import userRouter from "./routes/user.route.js"
 import generateRouter from "./routes/generate.route.js"
 import pdfRouter from "./routes/pdfDownload.route.js"
 import historyRoute from "./routes/history.route.js"
+import creditRoute from "./routes/credits.route.js"
+import { stripeWebhook } from "./controllers/credits.controller.js"
 
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 8000
+
+
+app.post(
+  "/api/credits/webhook",
+  express.raw({ type: "application/json" }),
+  stripeWebhook
+);
 
 app.get("/" , (req, res) =>{
     res.json({message : "Yes i am here"})
@@ -32,6 +41,8 @@ app.use("/api/user", userRouter)
 app.use("/api/notes", generateRouter)
 app.use("/api/pdf", pdfRouter)
 app.use("/api/history", historyRoute)
+app.use("/api/credit", creditRoute)
+
 
 
 
